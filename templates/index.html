@@ -1,0 +1,38 @@
+<!-- this is the html code containing the board for tic tac toe. Flask/Jinja is being used for this project. -->
+
+{% extends "layout.html" %}<!-- this adds onto the existing layout.html. Only changes the content in the body.-->
+{% block content %}
+{% if winner == "O" %}
+  <div class="alert alert-primary" role="alert"> <!--alert messages: blue bar is displayed with message below-->
+    "O is winner".
+  </div>
+{% elif winner == "X" %}
+  <div class="alert alert-primary" role="alert">
+    "X is winner".
+  </div>
+{% elif winner == "Tie" %}
+  <div class="alert alert-primary" role="alert">
+    "Tie".
+  </div>
+{% else %} <!--no alert message is displayed if there is no winner or tie-->
+{% endif %}
+<table class="table table-hover table-dark"> <!--bootstrap language: makes table dark-->
+   <tbody> <!--nested for loop-->
+     {% for i in range(3) %} <!--rows-->
+     <tr>
+       {% for j in range(3) %}<!--columns-->
+         <td>
+           {% if game[i][j] %}
+             {{ game[i][j] }}<!--tells python code that it's a different variable-->
+           {% else %}
+             <a href="{{ url_for('play', row=i, col=j) }}"> Play {{ turn }} here</a><!--each "turn" alternates from X to O. Message displayed in boxes.-->
+           {% endif %}
+         </td>
+       {% endfor %}
+     </tr>
+     {% endfor %}
+   </tbody>
+  </table>
+
+
+{% endblock %}
